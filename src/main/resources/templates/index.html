@@ -1,303 +1,332 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-	  th:replace="~{base::layout(~{::section})}">
+      th:replace="~{base::layout(~{::section})}">
 <head>
-	<meta charset="ISO-8859-1">
-	<title>Insert title here</title>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+    <meta charset="ISO-8859-1">
+    <title>E-Commerce Flash Sale</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
 </head>
 
 <style>
-	/* Enhanced Carousel Styles */
+    /* General Body Styling with Background Image */
+    body {
+        background-image: url('/img/buys 3.jpeg');
+        background-size: cover;
+        background-attachment: fixed;
+        background-position: center;
+        color: #fff;
+        font-family: 'Arial', sans-serif;
+    }
+
+    /* Enhanced Carousel Styles */
     #ecomHeroCarousel {
-      margin: 2rem 0;
-      position: relative;
+        margin: 2rem 0;
+        position: relative;
     }
 
     .carousel-inner {
-      border-radius: 1rem;
-      overflow: hidden;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        border-radius: 1rem;
+        overflow: hidden;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
     }
 
     .carousel-item {
-      position: relative;
-      transition: transform 1s ease-in-out;
-      opacity: 1;
-      transition: opacity 0.5s ease-in-out;
+        position: relative;
+        transition: transform 1s ease-in-out;
+        opacity: 1;
     }
 
     .hero-image-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, rgba(0,0,0,0.7), rgba(0,0,0,0.5));
-      z-index: 1;
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, rgba(0, 91, 187, 0.7), rgba(0, 123, 255, 0.5));
+        z-index: 1;
     }
 
     .carousel-caption {
-      z-index: 2;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-      padding: 1rem;
+        z-index: 2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        padding: 1rem;
     }
 
     .hero-content {
-      padding: 3rem;
-      background: rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(5px);
-      border-radius: 1rem;
-      color: #fff;
-      text-align: center;
+        padding: 3rem;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(5px);
+        border-radius: 1rem;
+        color: #fff;
+        text-align: center;
+    }
+
+    .hero-content h2 {
+        font-size: 3.5rem;
+        font-weight: 700;
+        color: #fff;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero-content p {
+        color: #e0e0e0;
     }
 
     .carousel-indicators button {
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      margin: 0 8px;
-      background-color: rgba(255,255,255,0.5);
-      border: 2px solid transparent;
-      transition: all 0.3s ease;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        margin: 0 8px;
+        background-color: rgba(255, 255, 255, 0.5);
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
     }
 
     .carousel-indicators .active {
-      background-color: white;
-      transform: scale(1.3);
-      border-color: white;
+        background-color: #ffca28;
+        transform: scale(1.3);
+        border-color: #fff;
     }
 
     .carousel-control-prev, .carousel-control-next {
-      top: 50%;
-      transform: translateY(-50%);
-      width: 50px;
-      height: 50px;
-      background-color: rgba(255,255,255,0.2);
-      border-radius: 50%;
-      opacity: 0;
-      transition: opacity 0.3s ease;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 50px;
+        height: 50px;
+        background-color: rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        opacity: 0;
+        transition: opacity 0.3s ease;
     }
 
     #ecomHeroCarousel:hover .carousel-control-prev,
     #ecomHeroCarousel:hover .carousel-control-next {
-      opacity: 1;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #2563eb, #1d4ed8);
-      border: none;
+        opacity: 1;
     }
 
     .btn-warning {
-      background: linear-gradient(135deg, #f59e0b, #d97706);
-      color: #fff;
-      border: none;
+        background: linear-gradient(135deg, #ffca28, #ffb300);
+        color: #1e3a8a;
+        border: none;
+        font-weight: bold;
     }
 
-    /* Smooth scroll */
+    .btn-warning:hover {
+        background: linear-gradient(135deg, #ffb300, #ffca28);
+    }
+
+    .badge-danger {
+        background-color: #ef4444;
+        font-size: 1rem;
+        padding: 0.5rem 1rem;
+    }
+
+    /* Category and Product Sections */
+    #categories, #trending {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 1rem;
+        padding: 2rem;
+        margin: 2rem 0;
+    }
+
+    #categories p, #trending p {
+        color: #ffca28;
+        font-size: 2rem;
+        font-weight: bold;
+    }
+
+    .card {
+        background: rgba(255, 255, 255, 0.9);
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .card a {
+        color: #1e3a8a;
+        font-weight: 500;
+    }
+
+    /* Smooth Scroll */
     html {
-      scroll-behavior: smooth;
+        scroll-behavior: smooth;
     }
 
     @media (max-width: 768px) {
-      .hero-content {
-        padding: 1.5rem;
-      }
+        .hero-content {
+            padding: 1.5rem;
+        }
 
-      .carousel-caption h2 {
-        font-size: 2rem;
-      }
+        .hero-content h2 {
+            font-size: 2rem;
+        }
 
-      .btn {
-        font-size: 1rem;
-        padding: 0.75rem 1.5rem;
-      }
+        .btn {
+            font-size: 1rem;
+            padding: 0.75rem 1.5rem;
+        }
 
-      .carousel-control-prev, .carousel-control-next {
-        opacity: 1;
-        width: 40px;
-        height: 40px;
-      }
+        .carousel-control-prev, .carousel-control-next {
+            opacity: 1;
+            width: 40px;
+            height: 40px;
+        }
     }
 </style>
 
 <body>
 <section>
-	<div id="ecomHeroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="4000">
-		<!-- Indicators -->
-		<div class="carousel-indicators">
-			<button type="button" data-bs-target="#ecomHeroCarousel" data-bs-slide-to="0" class="active"></button>
-			<button type="button" data-bs-target="#ecomHeroCarousel" data-bs-slide-to="1"></button>
-			<button type="button" data-bs-target="#ecomHeroCarousel" data-bs-slide-to="2"></button>
-		</div>
+    <div id="ecomHeroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="4000">
+        <!-- Indicators -->
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#ecomHeroCarousel" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#ecomHeroCarousel" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#ecomHeroCarousel" data-bs-slide-to="2"></button>
+        </div>
 
-		<!-- Slides -->
-		<div class="carousel-inner">
-			<!-- Slide 1 -->
-			<div class="carousel-item active">
-				<div class="hero-image-overlay"></div>
-				<img src="img/ecom1.jpeg" class="d-block w-100" alt="Slide 1" style="height: 600px; object-fit: cover;">
-				<div class="carousel-caption">
-					<div class="hero-content animate__animated animate__fadeInDown">
-						<span class="badge bg-primary mb-3">New Season</span>
-						<h2 class="display-4 fw-bold">Summer Collection 2023</h2>
-						<p class="lead">Discover our fresh new arrivals designed for your perfect summer</p>
-						<div class="mt-4 d-flex justify-content-center gap-3">
-							<a href="/products" class="btn btn-primary">Shop Collection</a>
-							<a href="#trending" class="btn btn-outline-light">View Trends</a>
-						</div>
-					</div>
-				</div>
-			</div>
+        <!-- Slides -->
+        <div class="carousel-inner">
+            <!-- Slide 1 -->
+            <div class="carousel-item active">
+                <div class="hero-image-overlay"></div>
+                <img src="img/clothes store.webp" class="d-block w-100" alt="Slide 1" style="height: 600px; object-fit: cover;">
+                <div class="carousel-caption">
+                    <div class="hero-content animate__animated animate__fadeInDown">
+                        <span class="badge bg-danger mb-3">Flash Sale</span>
+                        <h2 class="display-4 fw-bold">20% OFF Clothes</h2>
+                        <p class="lead">Refresh your wardrobe with Better_Buys_Fashion's exclusive deals!</p>
+                        <a href="/products?discount=true" class="btn btn-warning mt-3">Shop Deals</a>
+                    </div>
+                </div>
+            </div>
 
-			<!-- Slide 2 -->
-			<div class="carousel-item">
-				<div class="hero-image-overlay"></div>
-				<img src="img/ecom3.jpg" class="d-block w-100" alt="Slide 2" style="height: 600px; object-fit: cover;">
-				<div class="carousel-caption">
-					<div class="hero-content animate__animated animate__fadeInDown">
-						<span class="badge bg-danger mb-3">Flash Sale</span>
-						<h2 class="display-4 fw-bold">Up to 50% OFF</h2>
-						<p class="lead">Our biggest sale of the year ends soon - don't miss out!</p>
-						<a href="/products?discount=true" class="btn btn-warning mt-3">Shop Deals</a>
-					</div>
-				</div>
-			</div>
+            <!-- Slide 2 -->
+            <div class="carousel-item">
+                <div class="hero-image-overlay"></div>
+                <img src="img/shoes.webp" class="d-block w-100" alt="Slide 2" style="height: 600px; object-fit: cover;">
+                <div class="carousel-caption">
+                    <div class="hero-content animate__animated animate__fadeInDown">
+                        <span class="badge bg-primary mb-3">New Arrivals</span>
+                        <h2 class="display-4 fw-bold">20% OFF Shoes</h2>
+                        <p class="lead">Step into style with Better_Buys_Fashion's latest collection!</p>
+                        <div class="mt-4 d-flex justify-content-center gap-3">
+                            <a href="/products" class="btn btn-primary">Shop Collection</a>
+                            <a href="#trending" class="btn btn-outline-light">View Trends</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-			<!-- Slide 3 -->
-			<div class="carousel-item">
-				<div class="hero-image-overlay"></div>
-				<img src="img/ecom2.jpg" class="d-block w-100" alt="Slide 3" style="height: 600px; object-fit: cover;">
-				<div class="carousel-caption">
-					<div class="hero-content animate__animated animate__fadeInDown">
-						<span class="badge bg-success mb-3">Just In</span>
-						<h2 class="display-4 fw-bold">Fresh Arrivals Weekly</h2>
-						<p class="lead">Stay ahead with our latest collection drops and trends</p>
-						<a href="/products?new=true" class="btn btn-primary mt-3">Explore Now</a>
-					</div>
-				</div>
-			</div>
-		</div>
+            <!-- Slide 3 -->
+            <div class="carousel-item">
+                <div class="hero-image-overlay"></div>
+                <img src="img/makeup.webp" class="d-block w-100" alt="Slide 3" style="height: 600px; object-fit: cover;">
+                <div class="carousel-caption">
+                    <div class="hero-content animate__animated animate__fadeInDown">
+                        <span class="badge bg-success mb-3">Beauty Deals</span>
+                        <h2 class="display-4 fw-bold">20% OFF Makeup</h2>
+                        <p class="lead">Glow up with Better_Buys_Fashion's trending makeup products!</p>
+                        <a href="/products?new=true" class="btn btn-primary mt-3">Explore Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-		<!-- Controls -->
-		<button class="carousel-control-prev" type="button" data-bs-target="#ecomHeroCarousel" data-bs-slide="prev">
-			<span class="carousel-control-prev-icon"></span>
-		</button>
-		<button class="carousel-control-next" type="button" data-bs-target="#ecomHeroCarousel" data-bs-slide="next">
-			<span class="carousel-control-next-icon"></span>
-		</button>
-	</div>
+        <!-- Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#ecomHeroCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#ecomHeroCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
 
-	<!-- Category Module -->
-	<div class="container" id="categories">
-		<div class="row">
-			<p class="text-center fs-4">Category</p>
-			<div class="col-md-2" th:each="c:${category}">
-				<div class="card rounded-circle shadow-sm p-3 mb-5 bg-body-tertiary rounded">
-					<div class="card-body text-center">
-						<img th:src="@{'img/category_img/'+${c.imageName}}" width="65%" height="140px"><br>
-						<a th:href="@{'/products?category='+${c.name}}" class="text-decoration-none">[[${c.name}]]</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-2">
-    <div
-        class="card rounded-circle shadow-sm p-3 mb-5 bg-body-tertiary rounded ">
-        <div class="card-body text-center">
-            <img src="img/category_img/beuty.png" width="65%" height="140px">
-            <p>Beauty</p>
+    <!-- Category Module -->
+    <div class="container py-5 px-4" id="categories">
+        <div class="row justify-content-center g-5">
+            <p class="text-center fs-3 fw-bold mb-5" style="color: #1A5C5A;">Explore Categories</p>
+            <div class="col-md-2 col-6 mb-5" th:each="c:${category}">
+                <div class="card rounded-circle shadow-sm p-4 bg-body-tertiary category-card">
+                    <div class="card-body text-center p-0">
+                        <img th:src="@{'img/category_img/'+${c.imageName}}" width="160px" height="160px" class="category-img"><br>
+                        <a th:href="@{'/products?category='+${c.name}}" class="text-decoration-none category-name">[[${c.name}]]</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-			<div class="col-md-2">
-				<div
-						class="card rounded-circle shadow-sm p-3 mb-5 bg-body-tertiary rounded ">
-					<div class="card-body text-center">
-						<img src="img/category_img/pant.png" width="65%" height="140px">
-						<p>Clothes</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-2">
-				<div
-						class="card rounded-circle shadow-sm p-3 mb-5 bg-body-tertiary rounded ">
-					<div class="card-body text-center">
-						<img src="img/category_img/laptop.jpg" width="65%" height="140px">
-						<p>Laptop</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-2">
-				<div
-						class="card rounded-circle shadow-sm p-3 mb-5 bg-body-tertiary rounded ">
-					<div class="card-body text-center">
-						<img src="img/category_img/mobile.png" width="65%" height="140px">
-						<p>Mobile</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-2">
-				<div
-						class="card rounded-circle shadow-sm p-3 mb-5 bg-body-tertiary rounded ">
-					<div class="card-body text-center">
-						<img src="img/category_img/groccery.jpg" width="65%"
-							 height="140px">
-						<p>Grocery</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <style>
+        .category-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            background-color: #fff;
+            width: 200px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+        .category-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .category-img {
+            width: 160px;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+        .category-name {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #1A5C5A;
+            text-transform: uppercase;
+        }
+        .category-name:hover {
+            color: #F4A261;
+        }
+        @media (max-width: 576px) {
+            .category-card {
+                width: 150px;
+                height: 150px;
+            }
+            .category-img {
+                width: 120px;
+                height: 120px;
+            }
+            .category-name {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
 
-	<!-- Latest Product Module -->
-	<div class="container-fluid bg-light p-3" id="trending">
-		<div class="row">
-			<p class="text-center fs-4">Latest Product</p>
-			<div class="col-md-3" th:each="p:${products}">
-				<div class="card shadow-sm p-3 mb-5 bg-body-tertiary rounded">
-					<div class="card-body text-center">
-						<img alt="" th:src="@{'img/product_img/'+${p.image}}" class="" width="65%" height="140px">
-						<p class="text-center"><a th:href="@{'/product/'+${p.id}}" class="text-decoration-none">[[${p.title}]]</a></p>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-md-3">
-				<div class="card shadow-sm p-3 mb-5 bg-body-tertiary rounded">
-					<div class="card-body text-center">
-						<img alt="" src="img/product_img/laptop.jpg" class="" width="65%"
-							 height="140px">
-						<p class="text-center">HP Laptop</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3">
-				<div class="card shadow-sm p-3 mb-5 bg-body-tertiary rounded">
-					<div class="card-body text-center">
-						<img alt="" src="img/product_img/laptop.jpg" class="" width="65%"
-							 height="140px">
-						<p class="text-center">HP Laptop</p>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-md-3">
-				<div class="card shadow-sm p-3 mb-5 bg-body-tertiary rounded">
-					<div class="card-body text-center">
-						<img alt="" src="img/product_img/laptop.jpg" class="" width="65%"
-							 height="140px">
-						<p class="text-center">HP Laptop</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <!-- Latest Product Module -->
+    <div class="container-fluid p-3" id="trending">
+        <div class="row">
+            <p class="text-center fs-4">Latest Product</p>
+            <div class="col-md-3" th:each="p:${products}">
+                <div class="card shadow-sm p-3 mb-5 bg-body-tertiary rounded">
+                    <div class="card-body text-center">
+                        <img alt="" th:src="@{'img/product_img/'+${p.image}}" class="" width="65%" height="140px">
+                        <p class="text-center"><a th:href="@{'/product/'+${p.id}}" class="text-decoration-none">[[${p.title}]]</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
 </section>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-	// Enhanced carousel transitions and smooth scrolling
+    // Enhanced carousel transitions and smooth scrolling
     document.addEventListener('DOMContentLoaded', function() {
         // Initialize carousel with enhanced settings
         var myCarousel = document.getElementById('ecomHeroCarousel');
@@ -328,7 +357,7 @@
 
                 if (targetElement) {
                     window.scrollTo({
-                        top: targetElement.offsetTop - 80, // Offset for fixed header if needed
+                        top: targetElement.offsetTop - 80,
                         behavior: 'smooth'
                     });
                 }
@@ -336,7 +365,5 @@
         });
     });
 </script>
-
-
 </body>
 </html>
